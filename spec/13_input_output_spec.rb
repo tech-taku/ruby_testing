@@ -48,10 +48,13 @@ describe NumberGame do
       # Write a similar test to the one above, that uses a custom matcher
       # instead of <, >, =.
       matcher :be_between_zero_and_nine do
+        match { |number| number.between?(0, 9) }
       end
 
       # remove the 'x' before running this test
-      xit 'is a number between 0 and 9' do
+      it 'is a number between 0 and 9' do
+        solution = game.solution
+        expect(solution).to be_between_zero_and_nine
       end
     end
   end
@@ -78,8 +81,10 @@ describe NumberGame do
     # Create a new instance of NumberGame and write a test for when the @guess
     # does not equal @solution.
     context 'when user guess is not correct' do
+      subject(:game_end) { described_class.new(3, '8') }
       # remove the 'x' before running this test
-      xit 'is not game over' do
+      it 'is not game over' do
+        expect(game_end).not_to be_game_over
       end
     end
   end
@@ -108,6 +113,9 @@ describe NumberGame do
     # Write a test for the following context.
     context 'when given invalid input as argument' do
       xit 'returns nil' do
+        unser_input = 'a'
+        verified_input = game_check.verified_input(unser_input)
+        expect(verified_input).to be_nil
       end
     end
   end
@@ -168,9 +176,14 @@ describe NumberGame do
     # Write a test for the following context.
     context 'when user inputs two incorrect values, then a valid input' do
       before do
+        letter = 'd'
+        vowel = 'a'
+        allow(game_loop).to receive(:player_input).and_return(letter, vowel)
       end
 
-      xit 'completes loop and displays error message twice' do
+      it 'completes loop and displays error message twice' do
+        expect(game_loop).to receive(:puts).with('Input error!')
+        game_loop.player_turn
       end
     end
   end
@@ -201,8 +214,9 @@ describe NumberGame do
     # Create a new instance of NumberGame, with specific values for @solution,
     # @guess, and @count
     context 'when count is 2-3' do
+      subject(:game_one) { described_class.new(3,'3', 3) }
       # remove the 'x' before running this test
-      xit 'outputs correct phrase' do
+      it 'outputs correct phrase' do
         congrats_phrase = "Congratulations! You picked the random number in 3 guesses!\n"
         expect { game.final_message }.to output(congrats_phrase).to_stdout
       end
@@ -212,8 +226,11 @@ describe NumberGame do
 
     # Write a test for the following context.
     context 'when count is 4 and over' do
+      subject(:game_one) { described_class.new(3, '3', 6) }
       # remove the 'x' before running this test
-      xit 'outputs correct phrase' do
+      it 'outputs correct phrase' do
+        return_message = "That was hard. It took you 6 guesses!\n"
+        expect(game_one.final_message).to output(return_message).to_stdout
       end
     end
   end
