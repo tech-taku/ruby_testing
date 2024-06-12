@@ -70,14 +70,36 @@ describe MagicSeven do
   # Write a test for each of the following methods:
 
   describe '#subtract_four' do
+    context 'when previous step was 16' do
+      it 'returns 12' do
+        previous_step = 16
+        result = game.subtract_four(previous_step)
+        expect(result).to eq(12)
+      end
+    end
   end
 
   describe '#divide_by_two' do
+    context 'when previous step was 12' do
+      it 'returns 6' do
+        previous_step = 12
+        result = game.divide_by_two(previous_step)
+        expect(result).to eq(6)
+      end
+    end
   end
 
   # The following tests will need you to create new instances of MagicSeven with
   # a specific value for the random_number.
   describe '#subtract_random_number' do
+    subject(:game) { described_class.new(16) }
+    context 'when the previos number is 23 and 16 is the random number' do
+      it 'returns 7' do
+        previous_step = 23
+        result = game.subtract_random_number(previous_step)
+        expect(result).to eq(7)
+      end
+    end
   end
 
   # The #play method will always return seven! Test this game, using any
@@ -85,19 +107,29 @@ describe MagicSeven do
   describe '#play' do
     context 'when the random number is ...' do
       # remove the 'x' before running this test
-      xit 'will return 7' do
+      subject(:game) { described_class.new(19) }
+
+      it 'will return 7' do
+        result = game.play
+        expect(result).to eq(7)
       end
     end
 
-    context 'when the random number is ...' do
+    context 'when the random number is 12' do
       # remove the 'x' before running this test
-      xit 'will return 7' do
+      subject(:game) { described_class.new(12) }
+      it 'will return 7' do
+        result = game.play
+        expect(result).to eq(7)
       end
     end
 
-    context 'when the random number is ...' do
+    context 'when the random number is 5' do
       # remove the 'x' before running this test
-      xit 'will return 7' do
+      subject(:game) { described_class.new(5) }
+      it 'will return 7' do
+        result = game.play
+        expect(result).to eq(7)
       end
     end
   end
