@@ -30,7 +30,7 @@ class BinaryGame
       verified_number = verify_input(min, max, user_input.to_i) if user_input.match?(/^\d+$/)
       return verified_number if verified_number
 
-      puts "Input error! Please enter a number between #{min} or #{max}."
+      puts "Input error! Please enter a number between #{min} and #{max}."
     end
   end
 
